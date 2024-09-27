@@ -4,7 +4,7 @@ import { PanelLeftClose } from "lucide-react";
 import IconButton from "@/components/IconButton";
 import React, {useState, useRef, useEffect} from "react";
 import clsx from "clsx";
-import throttle from "lodash/throttle";
+import { throttle } from 'lodash';
 
 interface ResizeProps extends React.BaseHTMLAttributes<HTMLDivElement> {
 	onResizeStart?: React.MouseEventHandler<HTMLDivElement>;
