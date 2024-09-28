@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 interface DropdownItemsProps {
 	icon?: React.ReactNode;
+	id: string
 	text: string;
 	onClick?: () => void;
 	className?: string
@@ -11,9 +12,10 @@ interface DropdownItemsProps {
 }
 
 const DropdownItem = React.forwardRef<HTMLDivElement | null, DropdownItemsProps>(
-	({ icon, text, onClick, className }, ref) => {
+	({ id, icon, text, onClick, className }, ref) => {
 		return (
 			<div
+				id={id}
 				ref={ref}
 				className={clsx('flex flex-row items-center gap-4 hover:bg-gray-200 hover:bg-opacity-55 rounded-lg cursor-pointer p-1 focus:outline-none focus:bg-blue-200 focus:bg-opacity-55',className)}
 				onClick={onClick}

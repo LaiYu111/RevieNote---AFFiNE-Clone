@@ -13,7 +13,7 @@ import {
 	COMMAND_PRIORITY_CRITICAL,
 	BaseSelection,
 	$isRangeSelection,
-	$isRootOrShadowRoot, ElementNode, LexicalNode
+	$isRootOrShadowRoot, ElementNode, LexicalNode, $isParagraphNode
 } from "lexical";
 import Divider from "@/components/Divider";
 import ParagraphDropdown from "@/components/Editor/plugins/ToolbarPlugin/ParagraphDropdown.tsx";
@@ -66,6 +66,9 @@ function ToolbarPlugin(): JSX.Element  {
 				// 更新 blockType
 				if ($isHeadingNode(element)){
 					setBlockType(element.getTag())
+				}
+				else if($isParagraphNode(element)){
+					setBlockType(element.getType() as 'paragraph')
 				}
 			}
 

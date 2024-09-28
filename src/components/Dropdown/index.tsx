@@ -52,9 +52,13 @@ function Dropdown({title, className, children}: DropdownProps){
 
 	useEffect(() => {
 		if (isOpen) {
-			// 聚焦第一个菜单项
 			setTimeout(() => {
-				itemsRef.current[0]?.focus();
+				const focusedItem = itemsRef.current.find((item) => {
+					return item.id === title
+				})
+				if (focusedItem) {
+					focusedItem.focus();
+				}
 			}, 0);
 
 			document.addEventListener('mousedown', handleClickOutside);

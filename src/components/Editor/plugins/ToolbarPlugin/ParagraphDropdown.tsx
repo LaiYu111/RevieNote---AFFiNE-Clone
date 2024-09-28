@@ -39,10 +39,10 @@ function ParagraphDropdown({editor, blockType}: ParagraphDropdownProps){
 
 	return (
 		<Dropdown className={'pr-2 text-base '} title={blockTypeToBlockName[blockType]}>
-			<DropdownItem icon={<TextIcon />} text={blockTypeToBlockName.paragraph} onClick={formatParagraph}/>
-			<DropdownItem icon={<Heading1 />} text={blockTypeToBlockName.h1} onClick={() => formatHeading('h1')}/>
-			<DropdownItem icon={<Heading2 />} text={blockTypeToBlockName.h2} onClick={() => formatHeading('h2')}/>
-			<DropdownItem icon={<Heading3 />} text={blockTypeToBlockName.h3} onClick={() => formatHeading('h3')}/>
+			<DropdownItem id={blockTypeToBlockName.paragraph} icon={<TextIcon />} text={blockTypeToBlockName.paragraph} onClick={formatParagraph}/>
+			<DropdownItem id={blockTypeToBlockName.h1} icon={<Heading1 />} text={blockTypeToBlockName.h1} onClick={() => formatHeading('h1')}/>
+			<DropdownItem id={blockTypeToBlockName.h2} icon={<Heading2 />} text={blockTypeToBlockName.h2} onClick={() => formatHeading('h2')}/>
+			<DropdownItem id={blockTypeToBlockName.h3} icon={<Heading3 />} text={blockTypeToBlockName.h3} onClick={() => formatHeading('h3')}/>
 		</Dropdown>
 	)
 }
