@@ -21,6 +21,8 @@ import {blockTypeToBlockName, rootTypeToRootName} from "@/components/Editor/type
 import { $findMatchingParent} from '@lexical/utils';
 import { $isHeadingNode } from '@lexical/rich-text'
 
+
+
 function ToolbarPlugin(): JSX.Element  {
 	const [editor] = useLexicalComposerContext()
 	const [activeEditor, setActiveEditor] = useState<LexicalEditor>(editor)
@@ -90,84 +92,116 @@ function ToolbarPlugin(): JSX.Element  {
 	}, [editor, $updateToolbar]);
 
 
+	const handleSetIsEditable = (status: boolean) => {
+		editor.setEditable(status)
+		setIsEditable(status)
+	}
 
 
 	return (
 		<div className={'flex flex-row border-2 p-1 gap-1 rounded-lg h-10 items-center text-gray-700 bg-white sticky top-3 z-20'}>
-			{/*<IconButton*/}
-			{/*	className={'toolbar-icon'}*/}
-			{/*	icon={<Lock size={16}/>}*/}
-			{/*	type={'button'}*/}
-			{/*/>*/}
-
-			<IconButton
-				className={'toolbar-icon'}
-				icon={<Undo2 size={16}/>}
-				type={'button'}
-				disabled={!canUndo || !isEditable}
-				onClick={() => {
-					activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
-				}}
-			/>
-			<IconButton
-				className={'toolbar-icon'}
-				disabled={!canRedo || !isEditable}
-				icon={<Redo2 size={16}/>}
-				type={'button'}
-				onClick={() => {
-					activeEditor.dispatchCommand(REDO_COMMAND, undefined);
-				}}
-			/>
-			<Divider direction={'Vertical'} className={'h-full'} />
-
+			<div className={'flex flex-row justify-between w-full'}>
 			{
-				blockType in blockTypeToBlockName  && activeEditor === editor && (
-					<ParagraphDropdown rootType={rootType} blockType={blockType} editor={activeEditor} />
+				isEditable? (
+					<>
+						<div className={'flex flex-row gap-1 items-center'}>
+							<IconButton
+								className={'toolbar-icon'}
+								icon={<Undo2 size={16}/>}
+								type={'button'}
+								disabled={!canUndo || !isEditable}
+								onClick={() => {
+									activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
+								}}
+							/>
+							<IconButton
+								className={'toolbar-icon'}
+								disabled={!canRedo || !isEditable}
+								icon={<Redo2 size={16}/>}
+								type={'button'}
+								onClick={() => {
+									activeEditor.dispatchCommand(REDO_COMMAND, undefined);
+								}}
+							/>
+							<Divider direction={'Vertical'} className={'h-full'} />
+
+							{
+								blockType in blockTypeToBlockName  && activeEditor === editor && (
+									<ParagraphDropdown rootType={rootType} blockType={blockType} editor={activeEditor} />
+								)
+							}
+
+							<Divider direction={'Vertical'} />
+
+							<IconButton
+								className={`toolbar-icon ${isBold && 'toolbar-icon-selected'}`}
+								icon={<Bold size={isBold? 16: 14} strokeWidth={isBold? '3px' : '2.5px'}  />}
+								type={'button'}
+								disabled={!isEditable}
+								onClick={()=>{
+									activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')
+								}}
+							/>
+
+							<IconButton
+								className={`toolbar-icon ${isItalic && 'toolbar-icon-selected'}`}
+								icon={<ItalicIcon size={isItalic? 16: 14} strokeWidth={isItalic? '3px' : '2.5px'} />}
+								type={'button'}
+								disabled={!isEditable}
+								onClick={()=>{
+									activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')
+								}}
+							/>
+
+							<IconButton
+								className={`toolbar-icon ${isUnderline && 'toolbar-icon-selected'}`}
+								icon={<Underline size={isUnderline? 16: 14} strokeWidth={isUnderline? '3px' : '2.5px'} />}
+								type={'button'}
+								disabled={!isEditable}
+								onClick={()=>{
+									activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')
+								}}
+							/>
+
+							<IconButton
+								className={`toolbar-icon ${isInlineCode && 'toolbar-icon-selected'}`}
+								icon={<Code size={isInlineCode? 16: 14} strokeWidth={isInlineCode? '3px' : '2.5px'}/>}
+								type={'button'}
+								disabled={!isEditable}
+								onClick={() => {
+									activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')
+								}}
+							/>
+							<Divider direction={'Vertical'} />
+						</div>
+
+						<div className={'flex flex-row gap-1'}>
+							<Divider direction={'Vertical'} />
+							<IconButton
+								className={'toolbar-icon'}
+								icon={<Unlock size={16}/>}
+								type={'button'}
+								onClick={() => handleSetIsEditable(false)}
+							/>
+						</div>
+					</>
+				):(
+					<>
+						<div></div>
+						<div className={'flex flex-row gap-1'}>
+							<Divider direction={'Vertical'} />
+							<IconButton
+								className={'toolbar-icon'}
+								icon={<Lock size={16}/>}
+								type={'button'}
+								onClick={() => handleSetIsEditable(true)}
+							/>
+						</div>
+					</>
 				)
 			}
+			</div>
 
-			<Divider direction={'Vertical'} />
-
-			<IconButton
-				className={`toolbar-icon ${isBold && 'toolbar-icon-selected'}`}
-				icon={<Bold size={isBold? 16: 14} strokeWidth={isBold? '3px' : '2.5px'}  />}
-				type={'button'}
-				disabled={!isEditable}
-				onClick={()=>{
-					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')
-				}}
-			/>
-
-			<IconButton
-				className={`toolbar-icon ${isItalic && 'toolbar-icon-selected'}`}
-				icon={<ItalicIcon size={isItalic? 16: 14} strokeWidth={isItalic? '3px' : '2.5px'} />}
-				type={'button'}
-				disabled={!isEditable}
-				onClick={()=>{
-					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')
-				}}
-			/>
-
-			<IconButton
-				className={`toolbar-icon ${isUnderline && 'toolbar-icon-selected'}`}
-				icon={<Underline size={isUnderline? 16: 14} strokeWidth={isUnderline? '3px' : '2.5px'} />}
-				type={'button'}
-				disabled={!isEditable}
-				onClick={()=>{
-					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')
-				}}
-			/>
-
-			<IconButton
-				className={`toolbar-icon ${isInlineCode && 'toolbar-icon-selected'}`}
-				icon={<Code size={isInlineCode? 16: 14} strokeWidth={isInlineCode? '3px' : '2.5px'}/>}
-				type={'button'}
-				disabled={!isEditable}
-				onClick={() => {
-					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')
-				}}
-			/>
-			<Divider direction={'Vertical'} />
 		</div>
 	)
 }

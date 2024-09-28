@@ -4,11 +4,16 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import ToolbarPlugin from "@/components/Editor/plugins/ToolbarPlugin";
 import LexicalContentEditable from "@/components/Editor/ui/ContentEditable.tsx";
 import {LexicalEditorTheme} from "@/components/Editor/themes/LexicalEditorTheme.ts";
-import {HeadingNode} from '@lexical/rich-text'
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
-import React from "react";
-import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
-import type {EditorState, LexicalEditor} from "lexical";
+import AutoSavedPlugin from "@/components/Editor/plugins/AutoSavedPlugin";
+import {TextNode} from "lexical";
+
+
+
+function loadContent(){
+	return localStorage.getItem('editorContent')
+}
 
 
 function onError(error: Error){
@@ -20,20 +25,25 @@ function Editor(){
 		namespace: 'MyEditor',
 		theme: LexicalEditorTheme,
 		onError: onError,
-		nodes: [HeadingNode]
+		editorState: loadContent(),
+		nodes: [
+			HeadingNode,
+			TextNode,
+			QuoteNode,
+		],
 	}
 
 
 	return (
 		<LexicalComposer initialConfig={initialConfig}>
-			<ToolbarPlugin />
+			<AutoSavedPlugin />
+
+			<ToolbarPlugin/>
 			<HistoryPlugin />
 
 			<div className={'relative'}>
 				<RichTextPlugin
-					contentEditable={
-					<LexicalContentEditable placeholder={'hello'} />
-				}
+					contentEditable={<LexicalContentEditable placeholder={'hello'} />}
 					ErrorBoundary={LexicalErrorBoundary} />
 			</div>
 
