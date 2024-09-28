@@ -1,0 +1,30 @@
+.LexicalEditorTheme__textBold{
+    @apply font-bold
+}
+
+.LexicalEditorTheme__textItalic{
+    @apply italic
+}
+
+.LexicalEditorTheme__textUnderline{
+    /* 使用边框代替下划线，默认会遮挡出 yy gg 类似的字母 */
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+}
+
+.LexicalEditorTheme__textInlineCode{
+    @apply px-1 bg-gray-200 p-1 rounded-md text-sm bg-opacity-70 text-red-500
+}
+/* Headers */
+.LexicalEditorTheme__headerH1{
+    @apply text-5xl  font-bold  mb-4 ;
+}
+
+.LexicalEditorTheme__headerH2{
+    @apply text-2xl  text-gray-600 font-bold mb-2;
+}
+
+.LexicalEditorTheme__headerH3{
+    @apply text-lg  font-semibold mb-1;
+}

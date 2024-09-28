@@ -8,7 +8,6 @@ function Layout(){
 		<div className={'flex flex-row h-screen w-full'}>
 			<Sidebar />
 
-
 			<Router>
 				<Routes>
 					<Route path={'/'}>

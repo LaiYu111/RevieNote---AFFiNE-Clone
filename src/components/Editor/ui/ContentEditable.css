@@ -1,0 +1,12 @@
+.ContentEditable__root {
+    @apply  relative outline-0 min-h-52
+    py-2 flex flex-col gap-2
+}
+
+
+.ContentEditable__placeholder {
+    @apply text-gray-500 overflow-hidden absolute top-[8px] left-0.5 select-none
+    inline-block pointer-events-none whitespace-nowrap
+
+}
+

@@ -1,0 +1,9 @@
+.toolbar-icon {
+    @apply text-gray-700 size-[28px]
+}
+
+.toolbar-icon-selected {
+    @apply bg-blue-100
+}
+
+

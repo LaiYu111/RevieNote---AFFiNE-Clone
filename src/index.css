@@ -17,6 +17,14 @@ body {
     @apply text-gray-400 size-5
 }
 
+.dropdown-icon {
+    @apply text-gray-400 size-4
+}
+
+.caption {
+    @apply text-gray-500 text-sm
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;
