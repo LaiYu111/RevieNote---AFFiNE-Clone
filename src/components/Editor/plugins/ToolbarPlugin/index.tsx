@@ -9,13 +9,17 @@ import {
 	REDO_COMMAND,
 	UNDO_COMMAND,
 	$getSelection,
-	SELECTION_CHANGE_COMMAND, COMMAND_PRIORITY_CRITICAL, BaseSelection, $isRangeSelection, type EditorState
+	SELECTION_CHANGE_COMMAND,
+	COMMAND_PRIORITY_CRITICAL,
+	BaseSelection,
+	$isRangeSelection,
+	$isRootOrShadowRoot, ElementNode, LexicalNode
 } from "lexical";
 import Divider from "@/components/Divider";
-import Dropdown from "@/components/Dropdown";
 import ParagraphDropdown from "@/components/Editor/plugins/ToolbarPlugin/ParagraphDropdown.tsx";
 import {blockTypeToBlockName, rootTypeToRootName} from "@/components/Editor/types.ts";
-import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
+import { $findMatchingParent} from '@lexical/utils';
+import { $isHeadingNode } from '@lexical/rich-text'
 
 function ToolbarPlugin(): JSX.Element  {
 	const [editor] = useLexicalComposerContext()
@@ -37,13 +41,36 @@ function ToolbarPlugin(): JSX.Element  {
 		const selection: BaseSelection | null = $getSelection()
 
 		if ($isRangeSelection(selection)){
+			// 获取 HTML DOM
+			const anchorNode = selection.anchor.getNode();
+
+			let element= anchorNode.getKey() === 'root'
+				? anchorNode
+				: $findMatchingParent(anchorNode, (e: LexicalNode) => {
+					const parent: ElementNode | null = e.getParent();
+					return parent !== null && $isRootOrShadowRoot(parent);
+				});
+			if (element === null) {
+				element = anchorNode.getTopLevelElementOrThrow()
+			}
+
+			const elementKey = element.getKey();
+			const elementDOM = activeEditor.getElementByKey(elementKey);
 
 			setIsBold(selection.hasFormat('bold'))
 			setIsItalic(selection.hasFormat('italic'))
 			setIsUnderline(selection.hasFormat('underline'))
 			setIsInlineCode(selection.hasFormat('code'))
-		}
 
+			if (elementDOM){
+				// 更新 blockType
+				if ($isHeadingNode(element)){
+					setBlockType(element.getTag())
+				}
+			}
+
+
+		}
 	}, [activeEditor, editor])
 
 
