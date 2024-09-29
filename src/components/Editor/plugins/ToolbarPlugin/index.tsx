@@ -1,7 +1,7 @@
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
 import {JSX, useCallback, useEffect, useState} from "react";
 import './index.css'
-import {Bold, Code, ItalicIcon, Lock, Redo2, Underline, Undo2, Unlock} from "lucide-react";
+import {Bold, Code, ItalicIcon, LinkIcon, Lock, Redo2, Underline, Undo2, Unlock} from "lucide-react";
 import IconButton from "@/components/IconButton";
 import {
 	FORMAT_TEXT_COMMAND,
@@ -28,7 +28,8 @@ import { $findMatchingParent} from '@lexical/utils';
 import { $isHeadingNode } from '@lexical/rich-text'
 import FontColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/FontColorPickerDropdown.tsx";
 import BgColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/BgColorPickerDropdown.tsx";
-
+import {$isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
+import {node} from "globals";
 
 
 function ToolbarPlugin(): JSX.Element  {
@@ -46,6 +47,7 @@ function ToolbarPlugin(): JSX.Element  {
 	const [isInlineCode, setIsInlineCode] = useState<boolean>(false)
 	const [bgColor, setBgColor] = useState<string>('#fff');
 	const [fontColor, setFontColor] = useState<string>('#000')
+	const [isLink, setIsLink] = useState<boolean>(false)
 
 	const $updateToolbar = useCallback(() => {
 		const selection: BaseSelection | null = $getSelection()
@@ -82,6 +84,14 @@ function ToolbarPlugin(): JSX.Element  {
 				}
 			}
 
+			// Links
+			const parent = anchorNode.getParent()
+			if ($isLinkNode(anchorNode) || $isLinkNode(parent)){
+				setIsLink(true)
+			}else{
+				setIsLink(false)
+			}
+
 			// Colors
 			const fontColor = $getSelectionStyleValueForProperty(selection, 'color', '#000')
 			setFontColor(fontColor)
@@ -111,6 +121,19 @@ function ToolbarPlugin(): JSX.Element  {
 		editor.setEditable(status)
 		setIsEditable(status)
 	}
+
+	const insertLink = useCallback(() => {
+		if (!isLink) {
+			const url = prompt('https://')
+			console.log(url)
+			activeEditor.dispatchCommand(
+				TOGGLE_LINK_COMMAND,
+				`https://${url}`,
+			);
+		} else {
+			activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+		}
+	}, [activeEditor, isLink]);
 
 
 	return (
@@ -187,6 +210,15 @@ function ToolbarPlugin(): JSX.Element  {
 									activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')
 								}}
 							/>
+
+							<IconButton
+								className={`toolbar-icon ${isLink && 'toolbar-icon-selected'}`}
+								icon={<LinkIcon size={isLink? 16: 14} strokeWidth={isLink ? '3px' : '2.5px'}/>}
+								type={'button'}
+								disabled={!isEditable}
+								onClick={insertLink}
+							/>
+
 							<FontColorPickerDropdown activeEditor={activeEditor} colorValue={fontColor} />
 							<BgColorPickerDropdown activeEditor={activeEditor} colorValue={bgColor} />
 							<Divider direction={'Vertical'} />

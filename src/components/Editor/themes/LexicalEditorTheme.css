@@ -1,3 +1,34 @@
+.LexicalEditorTheme__o1{
+    padding: 0;
+    margin: 0;
+    list-style-position: outside;
+}
+
+.LexicalEditorTheme__o2{
+    padding: 0;
+    margin: 0;
+    list-style-type: upper-alpha;
+    list-style-position: outside;
+}
+
+.LexicalEditorTheme__o3{
+    padding: 0;
+    margin: 0;
+    list-style-type: lower-alpha;
+    list-style-position: outside;
+}
+
+.LexicalEditorTheme__ul{
+    padding: 0;
+    margin: 0;
+    list-style-position: outside;
+}
+
+.LexicalEditorTheme__listItem {
+    margin: 0 32px;
+}
+
+
 .LexicalEditorTheme__textBold{
     @apply font-bold
 }
@@ -30,8 +61,7 @@
 }
 
 .LexicalEditorTheme__link{
-    text-decoration: none;
-    @apply text-blue-500
+    @apply text-gray-400 underline underline-offset-4
 }
 
 .LexicalEditorTheme__link:hover{

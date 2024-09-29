@@ -10,6 +10,10 @@ import AutoSavedPlugin from "@/components/Editor/plugins/AutoSavedPlugin";
 import {TextNode} from "lexical";
 import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
+import {ListPlugin} from "@lexical/react/LexicalListPlugin";
+import {CheckListPlugin} from "@lexical/react/LexicalCheckListPlugin";
+import React from "react";
+import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 
 
 
@@ -46,6 +50,9 @@ function Editor(){
 
 			<ToolbarPlugin />
 			<HistoryPlugin />
+			<ListPlugin />
+			<CheckListPlugin />
+			<LinkPlugin />
 
 			<div className={'relative'}>
 				<RichTextPlugin
