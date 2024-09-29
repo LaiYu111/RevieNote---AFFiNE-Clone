@@ -14,6 +14,7 @@ import {ListPlugin} from "@lexical/react/LexicalListPlugin";
 import {CheckListPlugin} from "@lexical/react/LexicalCheckListPlugin";
 import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 import {CodeHighlightNode, CodeNode} from '@lexical/code';
+import EnsureLastParagraphPlugin from "@/components/Editor/plugins/EnsureLastParagraphPlugin";
 
 
 function loadContent(){
@@ -48,7 +49,6 @@ function Editor(){
 	return (
 		<LexicalComposer initialConfig={initialConfig}>
 			<AutoSavedPlugin />
-
 			<ToolbarPlugin />
 			<HistoryPlugin />
 			<ListPlugin />
@@ -56,11 +56,11 @@ function Editor(){
 			<LinkPlugin />
 
 			<div className={'relative'}>
+				<EnsureLastParagraphPlugin />
 				<RichTextPlugin
 					contentEditable={<LexicalContentEditable placeholder={'hello'} />}
 					ErrorBoundary={LexicalErrorBoundary} />
 			</div>
-
 		</LexicalComposer>
 	)
 }

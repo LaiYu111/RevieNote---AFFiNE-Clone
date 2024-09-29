@@ -17,13 +17,10 @@ import {
 } from "lexical";
 import {
 	$getSelectionStyleValueForProperty,
-	$isParentElementRTL,
-	$patchStyleText,
-	$setBlocksType,
 } from '@lexical/selection';
 import Divider from "@/components/Divider";
 import ParagraphDropdown from "@/components/Editor/plugins/ToolbarPlugin/ParagraphDropdown.tsx";
-import {blockTypeToBlockName, colorTypes, rootTypeToRootName} from "@/components/Editor/types.ts";
+import {blockTypeToBlockName, rootTypeToRootName} from "@/components/Editor/types.ts";
 import { $isHeadingNode } from '@lexical/rich-text'
 import FontColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/FontColorPickerDropdown.tsx";
 import BgColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/BgColorPickerDropdown.tsx";
@@ -34,17 +31,11 @@ import {
 } from '@lexical/list';
 import {
 	$findMatchingParent,
-	$getNearestBlockElementAncestorOrThrow,
 	$getNearestNodeOfType,
-	$isEditorIsNestedEditor,
-	mergeRegister,
 } from '@lexical/utils';
 import {
-	$createCodeNode,
 	$isCodeNode,
-	CODE_LANGUAGE_FRIENDLY_NAME_MAP,
 	CODE_LANGUAGE_MAP,
-	getLanguageFriendlyName,
 } from '@lexical/code';
 
 
