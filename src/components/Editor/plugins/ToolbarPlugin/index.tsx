@@ -39,6 +39,13 @@ import {
 	$isEditorIsNestedEditor,
 	mergeRegister,
 } from '@lexical/utils';
+import {
+	$createCodeNode,
+	$isCodeNode,
+	CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+	CODE_LANGUAGE_MAP,
+	getLanguageFriendlyName,
+} from '@lexical/code';
 
 
 function ToolbarPlugin(): JSX.Element  {
@@ -57,6 +64,7 @@ function ToolbarPlugin(): JSX.Element  {
 	const [bgColor, setBgColor] = useState<string>('#fff');
 	const [fontColor, setFontColor] = useState<string>('#000')
 	const [isLink, setIsLink] = useState<boolean>(false)
+	const [codeLanguage, setCodeLanguage] = useState<string>('')
 
 	const $updateToolbar = useCallback(() => {
 		const selection: BaseSelection | null = $getSelection()
@@ -90,7 +98,9 @@ function ToolbarPlugin(): JSX.Element  {
 				}
 				else if($isParagraphNode(element)){
 					setBlockType(element.getType() as 'paragraph')
-				}else if($isListNode(element)){
+				}
+				else if($isListNode(element)){
+					// list 类型
 					const parentList = $getNearestNodeOfType<ListNode>(
 						anchorNode,
 						ListNode
@@ -99,6 +109,14 @@ function ToolbarPlugin(): JSX.Element  {
 					if (type in blockTypeToBlockName){
 						setBlockType(type as keyof typeof  blockTypeToBlockName)
 					}
+				}
+				else if ($isCodeNode(element)){
+					const language =
+						element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
+					setCodeLanguage(
+						language ? CODE_LANGUAGE_MAP[language] || language : '',
+					);
+					setBlockType("code")
 				}
 			}
 
@@ -143,7 +161,6 @@ function ToolbarPlugin(): JSX.Element  {
 	const insertLink = useCallback(() => {
 		if (!isLink) {
 			const url = prompt('https://')
-			console.log(url)
 			activeEditor.dispatchCommand(
 				TOGGLE_LINK_COMMAND,
 				`https://${url}`,

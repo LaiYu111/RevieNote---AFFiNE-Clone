@@ -12,9 +12,8 @@ import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
 import {ListPlugin} from "@lexical/react/LexicalListPlugin";
 import {CheckListPlugin} from "@lexical/react/LexicalCheckListPlugin";
-import React from "react";
 import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
-
+import {CodeHighlightNode, CodeNode} from '@lexical/code';
 
 
 function loadContent(){
@@ -39,7 +38,9 @@ function Editor(){
 			TextNode,
 			QuoteNode,
 			ListNode,
-			ListItemNode
+			ListItemNode,
+			CodeNode,
+			CodeHighlightNode
 		],
 	}
 
