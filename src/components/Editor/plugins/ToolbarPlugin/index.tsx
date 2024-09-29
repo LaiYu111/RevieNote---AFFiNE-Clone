@@ -24,12 +24,21 @@ import {
 import Divider from "@/components/Divider";
 import ParagraphDropdown from "@/components/Editor/plugins/ToolbarPlugin/ParagraphDropdown.tsx";
 import {blockTypeToBlockName, colorTypes, rootTypeToRootName} from "@/components/Editor/types.ts";
-import { $findMatchingParent} from '@lexical/utils';
 import { $isHeadingNode } from '@lexical/rich-text'
 import FontColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/FontColorPickerDropdown.tsx";
 import BgColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/BgColorPickerDropdown.tsx";
 import {$isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
-import {node} from "globals";
+import {
+	$isListNode,
+	ListNode
+} from '@lexical/list';
+import {
+	$findMatchingParent,
+	$getNearestBlockElementAncestorOrThrow,
+	$getNearestNodeOfType,
+	$isEditorIsNestedEditor,
+	mergeRegister,
+} from '@lexical/utils';
 
 
 function ToolbarPlugin(): JSX.Element  {
@@ -81,6 +90,15 @@ function ToolbarPlugin(): JSX.Element  {
 				}
 				else if($isParagraphNode(element)){
 					setBlockType(element.getType() as 'paragraph')
+				}else if($isListNode(element)){
+					const parentList = $getNearestNodeOfType<ListNode>(
+						anchorNode,
+						ListNode
+					)
+					const type = parentList ? parentList.getListType(): element.getListType()
+					if (type in blockTypeToBlockName){
+						setBlockType(type as keyof typeof  blockTypeToBlockName)
+					}
 				}
 			}
 
