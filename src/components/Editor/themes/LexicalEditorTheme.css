@@ -28,3 +28,15 @@
 .LexicalEditorTheme__headerH3{
     @apply text-lg  font-semibold mb-1;
 }
+
+.LexicalEditorTheme__link{
+    text-decoration: none;
+    @apply text-blue-500
+}
+
+.LexicalEditorTheme__link:hover{
+    @apply cursor-pointer
+}
+
+.LexicalEditorTheme__textParagraph{
+}

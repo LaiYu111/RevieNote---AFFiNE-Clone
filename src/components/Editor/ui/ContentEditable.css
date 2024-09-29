@@ -1,6 +1,9 @@
 .ContentEditable__root {
     @apply  relative outline-0 min-h-52
-    py-2 flex flex-col gap-2
+    py-2 flex flex-col gap-1.5
+}
+.ContentEditable__root span{
+    @apply py-0.5
 }
 
 

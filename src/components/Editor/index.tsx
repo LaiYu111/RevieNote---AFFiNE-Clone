@@ -8,6 +8,8 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
 import AutoSavedPlugin from "@/components/Editor/plugins/AutoSavedPlugin";
 import {TextNode} from "lexical";
+import {AutoLinkNode, LinkNode} from '@lexical/link';
+import {ListItemNode, ListNode} from '@lexical/list';
 
 
 
@@ -27,9 +29,13 @@ function Editor(){
 		onError: onError,
 		editorState: loadContent(),
 		nodes: [
+			LinkNode,
+			AutoLinkNode,
 			HeadingNode,
 			TextNode,
 			QuoteNode,
+			ListNode,
+			ListItemNode
 		],
 	}
 
@@ -38,7 +44,7 @@ function Editor(){
 		<LexicalComposer initialConfig={initialConfig}>
 			<AutoSavedPlugin />
 
-			<ToolbarPlugin/>
+			<ToolbarPlugin />
 			<HistoryPlugin />
 
 			<div className={'relative'}>

@@ -3,12 +3,14 @@ import {ChevronDown, ChevronRight} from "lucide-react";
 import IconButton from "@/components/IconButton";
 
 interface DropdownProps {
-	title: string
+	title: string | ReactNode
 	className: string
 	children?: ReactNode
+	showToggleIcon?: boolean
+	value?: string // 与 Dropdown Id 匹配。若匹配则选中。
 }
 
-function Dropdown({title, className, children}: DropdownProps){
+function Dropdown({title, value, className, children, showToggleIcon = true}: DropdownProps){
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const dropdownRef = useRef<HTMLDivElement>(null)
 	const itemsRef = useRef<Array<HTMLDivElement>>([])
@@ -25,7 +27,6 @@ function Dropdown({title, className, children}: DropdownProps){
 
 	const handleKeyDown = (e: KeyboardEvent) => {
 		if (!isOpen) return
-
 		const currentIndex = itemsRef.current.findIndex(item => item === document.activeElement)
 		switch (e.key){
 			case 'ArrowDown': {
@@ -54,7 +55,7 @@ function Dropdown({title, className, children}: DropdownProps){
 		if (isOpen) {
 			setTimeout(() => {
 				const focusedItem = itemsRef.current.find((item) => {
-					return item.id === title
+					return item.id === value
 				})
 				if (focusedItem) {
 					focusedItem.focus();
@@ -79,7 +80,7 @@ function Dropdown({title, className, children}: DropdownProps){
 		if (React.isValidElement(child)){
 			return React.cloneElement(child as ReactElement, {
 				ref: (el: HTMLDivElement) => (itemsRef.current[index] = el),
-				// className: 'DropdownItems__cloned'
+				className: 'DropdownItems__cloned'
 			})
 		}
 	})
@@ -90,13 +91,16 @@ function Dropdown({title, className, children}: DropdownProps){
 			className={className}
 		>
 			<div
-				className={'flex flex-row cursor-pointer relative h-7 items-center'}
+				className={'flex flex-row gap-1 cursor-pointer relative h-7 items-center'}
 				onClick={toggleDropdown}
 			>
-					{isOpen ?
+				{
+					showToggleIcon && (
+						isOpen ?
 						<IconButton icon={ <ChevronDown className={'dropdown-icon'}/>}/>
 						:<IconButton icon={ <ChevronRight className={'dropdown-icon'}/>}/>
-					}
+					)
+				}
 				<div>
 					{title}
 				</div>
@@ -104,7 +108,7 @@ function Dropdown({title, className, children}: DropdownProps){
 
 			{isOpen && (
 				<div
-					className={'flex flex-col justify-center gap-2 absolute min-w-64  mt-2 bg-white shadow-dropdown z-10 rounded-lg p-2'}
+					className={'flex flex-col  gap-2 absolute min-w-72 max-h-96 overflow-y-auto  mt-2 bg-white shadow-dropdown z-10 rounded-lg p-2'}
 					role={'menuitem'}
 				>
 					{DropdownItemsCloned}

@@ -23,7 +23,8 @@ module.exports = {
         '5xl': '3rem',    // 48px
       },
       boxShadow: {
-        'dropdown': "1px 2px 5px rgba(0,0,0,0.2)"
+        'dropdown': "1px 2px 5px rgba(0,0,0,0.2)",
+        'colorBlock': "1px 1px 1px rgba(0,0,0,0.1)"
       }
     },
   },

@@ -1,5 +1,5 @@
 import {useLexicalComposerContext} from "@lexical/react/LexicalComposerContext";
-import React, {JSX, useCallback, useEffect, useState} from "react";
+import {JSX, useCallback, useEffect, useState} from "react";
 import './index.css'
 import {Bold, Code, ItalicIcon, Lock, Redo2, Underline, Undo2, Unlock} from "lucide-react";
 import IconButton from "@/components/IconButton";
@@ -15,11 +15,19 @@ import {
 	$isRangeSelection,
 	$isRootOrShadowRoot, ElementNode, LexicalNode, $isParagraphNode
 } from "lexical";
+import {
+	$getSelectionStyleValueForProperty,
+	$isParentElementRTL,
+	$patchStyleText,
+	$setBlocksType,
+} from '@lexical/selection';
 import Divider from "@/components/Divider";
 import ParagraphDropdown from "@/components/Editor/plugins/ToolbarPlugin/ParagraphDropdown.tsx";
-import {blockTypeToBlockName, rootTypeToRootName} from "@/components/Editor/types.ts";
+import {blockTypeToBlockName, colorTypes, rootTypeToRootName} from "@/components/Editor/types.ts";
 import { $findMatchingParent} from '@lexical/utils';
 import { $isHeadingNode } from '@lexical/rich-text'
+import FontColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/FontColorPickerDropdown.tsx";
+import BgColorPickerDropdown from "@/components/Editor/plugins/ToolbarPlugin/BgColorPickerDropdown.tsx";
 
 
 
@@ -30,14 +38,14 @@ function ToolbarPlugin(): JSX.Element  {
 	const [rootType, setRootType] = useState<keyof typeof rootTypeToRootName>('root')
 
 	const [isEditable, setIsEditable] = useState<boolean>(() => editor.isEditable())
-	const [fontSize, setFontSize] = useState<string>('16px')
 	const [canUndo, setCanUndo] = useState<boolean>(false);
 	const [canRedo, setCanRedo] = useState<boolean>(false);
 	const [isBold, setIsBold] = useState<boolean>(false)
 	const [isItalic, setIsItalic] = useState<boolean>(false)
 	const [isUnderline, setIsUnderline] = useState<boolean>(false)
 	const [isInlineCode, setIsInlineCode] = useState<boolean>(false)
-	const [isLink, setIsLine] = useState<boolean>(false)
+	const [bgColor, setBgColor] = useState<string>('#fff');
+	const [fontColor, setFontColor] = useState<string>('#000')
 
 	const $updateToolbar = useCallback(() => {
 		const selection: BaseSelection | null = $getSelection()
@@ -74,6 +82,13 @@ function ToolbarPlugin(): JSX.Element  {
 				}
 			}
 
+			// Colors
+			const fontColor = $getSelectionStyleValueForProperty(selection, 'color', '#000')
+			setFontColor(fontColor)
+
+			// bg color
+			const bgColor = $getSelectionStyleValueForProperty(selection, 'background-color', '#fff')
+			setBgColor(bgColor)
 
 		}
 	}, [activeEditor, editor])
@@ -172,6 +187,8 @@ function ToolbarPlugin(): JSX.Element  {
 									activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')
 								}}
 							/>
+							<FontColorPickerDropdown activeEditor={activeEditor} colorValue={fontColor} />
+							<BgColorPickerDropdown activeEditor={activeEditor} colorValue={bgColor} />
 							<Divider direction={'Vertical'} />
 						</div>
 
