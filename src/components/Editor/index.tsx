@@ -17,6 +17,7 @@ import {CodeHighlightNode, CodeNode} from '@lexical/code';
 import EnsureLastParagraphPlugin from "@/components/Editor/plugins/EnsureLastParagraphPlugin";
 import {MarkdownShortcutPlugin} from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
+import {TabIndentationPlugin} from "@lexical/react/LexicalTabIndentationPlugin";
 
 
 function loadContent(){
@@ -57,6 +58,7 @@ function Editor(){
 			<ListPlugin />
 			<CheckListPlugin />
 			<LinkPlugin />
+			<TabIndentationPlugin />
 			<MarkdownShortcutPlugin />
 			<div className={'relative'}>
 				<EnsureLastParagraphPlugin />
