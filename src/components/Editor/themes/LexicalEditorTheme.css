@@ -135,7 +135,7 @@
     line-height: 1.53;
     font-size: 13px;
     margin: 8px 0;
-    overflow-x: scroll;
+    overflow-x: auto;
     position: relative;
     tab-size: 2;
 }

@@ -1,7 +1,9 @@
 import IconButton from "@/components/IconButton";
-import {Ellipsis, Info as InfoIcon} from "lucide-react";
+import {Ellipsis, Info as InfoIcon, PanelLeftOpen} from "lucide-react";
 import Editor from "@/components/Editor";
 import clsx from "clsx";
+import {useAppDispatch, useAppSelector} from "@/redux/store.ts";
+import {openSidebar} from "@/redux/slices/sidebarSlice.ts";
 
 
 
@@ -10,6 +12,12 @@ interface HeaderContainerProps{
 }
 
 function HeaderContainer({className}:HeaderContainerProps){
+	const dispatch = useAppDispatch()
+	const sidebarOpened = useAppSelector((state) => state.sidebar.isOpen)
+	const handleOpenSidebar = () => {
+		dispatch(openSidebar())
+	}
+
 	return (
 		<div
 			className={className}
@@ -17,6 +25,9 @@ function HeaderContainer({className}:HeaderContainerProps){
 			<div
 				className={'flex flex-row h-full items-center gap-3'}
 			>
+				{
+					!sidebarOpened && <IconButton icon={<PanelLeftOpen className={'icon'} onClick={handleOpenSidebar} />} />
+				}
 				<div>Title</div>
 				<div><IconButton icon={<InfoIcon className={'icon'}/>}/></div>
 				<div><IconButton icon={<Ellipsis className={'icon'}/>}/></div>
@@ -84,7 +95,7 @@ function MainContainer() {
 	return (
 		<div className={'h-full w-full flex flex-col'}>
 			<HeaderContainer className={'h-14 px-4 border-b-2'}/>
-			<BodyContainer className='mx-auto w-full max-w-4xl px-4'/>
+			<BodyContainer className='mx-auto h-full overflow-y-auto w-full max-w-4xl px-4'/>
 		</div>
 	)
 }
