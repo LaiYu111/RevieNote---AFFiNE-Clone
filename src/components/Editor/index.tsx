@@ -18,6 +18,8 @@ import EnsureLastParagraphPlugin from "@/components/Editor/plugins/EnsureLastPar
 import {MarkdownShortcutPlugin} from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
 import {TabIndentationPlugin} from "@lexical/react/LexicalTabIndentationPlugin";
+import CodeHighlightPlugin from "@/components/Editor/plugins/CodeHighlightPlugin";
+import PastePlugin from "@/components/Editor/plugins/PastePlugin";
 
 
 function loadContent(){
@@ -59,7 +61,9 @@ function Editor(){
 			<CheckListPlugin />
 			<LinkPlugin />
 			<TabIndentationPlugin />
+			<CodeHighlightPlugin />
 			<MarkdownShortcutPlugin />
+			<PastePlugin />
 			<div className={'relative'}>
 				<EnsureLastParagraphPlugin />
 				<RichTextPlugin
