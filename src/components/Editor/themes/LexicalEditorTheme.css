@@ -123,3 +123,29 @@
 
 .LexicalEditorTheme__textParagraph{
 }
+
+.LexicalEditorTheme__codeBlock{
+    background-color: rgb(240, 242, 245);
+    font-family: Menlo, Consolas, Monaco, monospace;
+    display: block;
+    padding: 8px 8px 8px 52px;
+    line-height: 1.53;
+    font-size: 13px;
+    margin: 8px 0;
+    overflow-x: scroll;
+    position: relative;
+    tab-size: 2;
+}
+.LexicalEditorTheme__codeBlock:before{
+    content: attr(data-gutter);
+    position: absolute;
+    background-color: #eee;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #ccc;
+    padding: 8px;
+    color: #777;
+    white-space: pre-wrap;
+    text-align: right;
+    min-width: 25px;
+}

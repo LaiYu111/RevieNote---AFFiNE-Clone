@@ -14,6 +14,10 @@ export const LexicalEditorTheme: EditorThemeClasses = {
 		h2: 'LexicalEditorTheme__headerH2',
 		h3: 'LexicalEditorTheme__headerH3'
 	},
+	code: 'LexicalEditorTheme__codeBlock',
+	codeHighlight: {
+
+	},
 	link: 'LexicalEditorTheme__link',
 	list: {
 		checklist: 'LexicalEditorTheme__checkList',
