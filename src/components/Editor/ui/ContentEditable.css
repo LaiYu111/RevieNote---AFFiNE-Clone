@@ -21,7 +21,7 @@
 .ContentEditable__root p:last-child::after {
     content: '↑ - Enter "↓" or Click here to create a new paragraph';
     /*animation: blink 5s ease-in-out;*/
-    @apply absolute top-0 left-2 text-gray-400
+    @apply absolute top-0 left-1 text-gray-400
 }
 .ContentEditable__root p:last-child:hover {
     @apply bg-blue-200 bg-opacity-50 rounded-sm cursor-pointer transition-all animation-on-hover

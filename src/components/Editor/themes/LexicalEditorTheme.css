@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     list-style-position: outside;
+    list-style-type: decimal;
 }
 
 .LexicalEditorTheme__o2{
@@ -18,16 +19,38 @@
     list-style-position: outside;
 }
 
-.LexicalEditorTheme__ul{
+.LexicalEditorTheme__ul1{
     padding: 0;
     margin: 0;
     list-style-position: outside;
+    list-style-type: disc;
+}
+
+.LexicalEditorTheme__ul2{
+    padding: 0;
+    margin: 0;
+    list-style-position: outside;
+    list-style-type: circle;
+}
+
+.LexicalEditorTheme__ul3{
+    padding: 0;
+    margin: 0;
+    list-style-position: outside;
+    list-style-type: square;
 }
 
 .LexicalEditorTheme__listItem {
-    margin: 0 32px;
+    margin-left: 30px;
 }
 
+.LexicalEditorTheme__nestedListItem{
+    list-style-type: none;
+}
+.LexicalEditorTheme__nestedListItem:before,
+.LexicalEditorTheme__nestedListItem:after{
+    display: none;
+}
 
 .LexicalEditorTheme__textBold{
     @apply font-bold

@@ -16,18 +16,23 @@ export const LexicalEditorTheme: EditorThemeClasses = {
 	},
 	link: 'LexicalEditorTheme__link',
 	list: {
-		checklist: '',
+		// checklist: '',
 		listitem: 'LexicalEditorTheme__listItem',
-		listitemChecked: '',
-		listitemUnchecked: '',
-		nested: {
-			listitem: '',
-		},
+		// listitemChecked: '',
+		// listitemUnchecked: '',
 		olDepth: [
 			'LexicalEditorTheme__o1',
 			'LexicalEditorTheme__o2',
 			'LexicalEditorTheme__o3',
 		],
-		ul: 'LexicalEditorTheme__ul'
+		ul: 'LexicalEditorTheme__ul',
+		ulDepth: [
+			'LexicalEditorTheme__ul1',
+			'LexicalEditorTheme__ul2',
+			'LexicalEditorTheme__ul3',
+		],
+		nested: {
+			listitem: 'LexicalEditorTheme__nestedListItem',
+		},
 	}
 }
