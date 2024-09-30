@@ -15,6 +15,8 @@ import {CheckListPlugin} from "@lexical/react/LexicalCheckListPlugin";
 import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 import {CodeHighlightNode, CodeNode} from '@lexical/code';
 import EnsureLastParagraphPlugin from "@/components/Editor/plugins/EnsureLastParagraphPlugin";
+import {MarkdownShortcutPlugin} from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import {HorizontalRuleNode} from "@lexical/react/LexicalHorizontalRuleNode";
 
 
 function loadContent(){
@@ -41,7 +43,8 @@ function Editor(){
 			ListNode,
 			ListItemNode,
 			CodeNode,
-			CodeHighlightNode
+			CodeHighlightNode,
+			HorizontalRuleNode
 		],
 	}
 
@@ -54,7 +57,7 @@ function Editor(){
 			<ListPlugin />
 			<CheckListPlugin />
 			<LinkPlugin />
-
+			<MarkdownShortcutPlugin />
 			<div className={'relative'}>
 				<EnsureLastParagraphPlugin />
 				<RichTextPlugin
