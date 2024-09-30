@@ -16,10 +16,10 @@ export const LexicalEditorTheme: EditorThemeClasses = {
 	},
 	link: 'LexicalEditorTheme__link',
 	list: {
-		// checklist: '',
+		checklist: 'LexicalEditorTheme__checkList',
 		listitem: 'LexicalEditorTheme__listItem',
-		// listitemChecked: '',
-		// listitemUnchecked: '',
+		listitemChecked: 'LexicalEditorTheme__listItemChecked',
+		listitemUnchecked: 'LexicalEditorTheme__listItemUnchecked',
 		olDepth: [
 			'LexicalEditorTheme__o1',
 			'LexicalEditorTheme__o2',
