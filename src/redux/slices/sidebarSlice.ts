@@ -13,7 +13,7 @@ const initialState: SidebarStateType = {
 	isOpen: true,
 	width: 300,
 	MAX_WIDTH: 500,
-	MIN_WIDTH: 200,
+	MIN_WIDTH: 70,
 	CLOSED_WIDTH: 0,
 	DEFAULT_WIDTH: 300
 }

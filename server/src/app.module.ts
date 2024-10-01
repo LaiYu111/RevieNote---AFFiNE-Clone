@@ -1,18 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {ConfigModule} from "@nestjs/config";
-import {MongooseModule} from "@nestjs/mongoose";
-import { DemoModule } from './demo/demo.module';
-import * as process from "node:process";
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { DatabaseModule } from './database/database.module';
+import { WorkspaceModule } from './workspace/workspace.module';
+import { PageModule } from './page/page.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true
-    }),
-    MongooseModule.forRoot(process.env.MONGODB_CONNECTION_STR),
-    DemoModule
+    AuthModule,
+    UserModule,
+    DatabaseModule,
+    WorkspaceModule,
+    PageModule
   ],
   controllers: [AppController],
   providers: [AppService],

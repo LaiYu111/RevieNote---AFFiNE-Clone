@@ -16,6 +16,20 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@reviewnote/lib/database": [
+        "libs/lib/database/src"
+      ],
+      "@reviewnote/lib/database/*": [
+        "libs/lib/database/src/*"
+      ],
+      "@reviewnote/database": [
+        "libs/database/src"
+      ],
+      "@reviewnote/database/*": [
+        "libs/database/src/*"
+      ]
+    }
   }
 }
