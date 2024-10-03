@@ -1,11 +1,12 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Body, Controller, HttpException, HttpStatus, Post, Res} from '@nestjs/common';
 import {ApiOperation, ApiTags} from "@nestjs/swagger";
 import {AuthService} from "./auth.service";
 import {AuthDto} from "./dto/auth.dto";
 import {UserService} from "../user/user.service";
 import {User} from "../schemas/UserSchema";
-import {md5Encrypt} from "../utils";
+import { md5Encrypt, validateEmail} from "../utils";
 import {Public} from "./constants";
+import {UserDto} from "./dto/user.dto";
 
 @ApiTags('auth')
 @Controller('api/auth')
@@ -26,10 +27,23 @@ export class AuthController {
 	@ApiOperation({ summary: 'Public' })
 	@Post('/register')
 	async register(@Body() authDto: AuthDto){
+		if (!validateEmail(authDto.email)){
+			throw new HttpException('Wrong email format', HttpStatus.BAD_REQUEST)
+		}
+		const existUser = await this.userService.findByEmail(authDto.email)
+		if (existUser){
+			throw new HttpException('Email existed', HttpStatus.CONFLICT)
+		}
+
 		const user = new User()
 		user.username = authDto.email
 		user.email = authDto.email
 		user.password = md5Encrypt(authDto.password)
-		return this.userService.createUser(user)
+		const newUser = await this.userService.createUser(user)
+		const userDto = new UserDto()
+		userDto._id = newUser._id
+		userDto.email = newUser.email
+		userDto.username = newUser.username
+		return userDto
 	}
 }

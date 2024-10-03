@@ -1,10 +1,14 @@
-import { PanelLeftClose } from "lucide-react";
+import {PanelLeftClose, Plus} from "lucide-react";
 import IconButton from "@/components/IconButton";
 import React, { useRef, useEffect} from "react";
 import clsx from "clsx";
 import { throttle} from 'lodash';
 import {useAppDispatch, useAppSelector} from "@/redux/store.ts";
 import {closeSidebar, setWidth} from "@/redux/slices/sidebarSlice.ts";
+import User from "@/components/Layout/Sidebar/User.tsx";
+import useGet from "@/hooks/useGet.ts";
+import {BACKEND_URL} from "@/config.ts";
+
 
 interface ResizeProps extends React.BaseHTMLAttributes<HTMLDivElement> {
 	onResizeStart?: React.MouseEventHandler<HTMLDivElement>;
@@ -25,7 +29,11 @@ function Resize({ className, onResizeStart, ...rest }: ResizeProps) {
 	);
 }
 
-function Sidebar() {
+interface SidebarProps {
+	ws_id: string
+}
+
+function Sidebar({ws_id}: SidebarProps) {
 	const dispatch = useAppDispatch()
 	const MIN_WIDTH = useAppSelector(state => state.sidebar.MIN_WIDTH);
 	const MAX_WIDTH = useAppSelector(state => state.sidebar.MAX_WIDTH);
@@ -35,7 +43,7 @@ function Sidebar() {
 	const isResizing = useRef<boolean>(false);
 	const initialWidth = useRef<number>(width);
 	const startX = useRef<number>(0);
-
+	const {data, fetchData} = useGet(BACKEND_URL)
 
 	useEffect(() => {
 		const handleMouseMove = throttle((e) => {
@@ -77,6 +85,14 @@ function Sidebar() {
 		dispatch(closeSidebar())
 	}
 
+	useEffect(() => {
+		if (ws_id){
+			fetchData(`/api/page/all/${ws_id}`)
+		}
+	}, [ws_id]);
+
+
+
 	return (
 		<div
 			ref={sidebarRef}
@@ -86,22 +102,31 @@ function Sidebar() {
 			style={{ width: `${width}px` }}
 		>
 			<nav className={clsx(
-				'w-full h-full flex flex-col border-r-2 overflow-hidden transition-all duration-300',
+				'w-full h-full flex flex-col border-r-2 overflow-hidden transition-all duration-300 gap-3',
 				isOpen? 'px-4 py-3':'px-0 py-3'
 			)}>
-				<div className={''}>
-					<IconButton icon={<PanelLeftClose className={'icon'} type={'button'} onClick={handleCloseSidebar} />} />
-				</div>
+				<div><IconButton icon={<PanelLeftClose className={'icon'} type={'button'} onClick={handleCloseSidebar} />} /></div>
+				<User />
 
-				<div>
-					sss
+				<div className={'flex'}>
+					<div>Private</div>
+					<IconButton icon={<Plus />} />
 				</div>
+				{
+					data && data.map((value) => (
+						<div>
+							{value}
+						</div>
+					))
+				}
 			</nav>
 
-			<Resize
-				className={'absolute top-0 -right-[5px]'}
-				onResizeStart={handleResizeStart}
-			/>
+			{
+				isOpen && <Resize
+          className={'absolute top-0 -right-[5px]'}
+          onResizeStart={handleResizeStart}
+        />
+			}
 		</div>
 	);
 }

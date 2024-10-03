@@ -22,8 +22,11 @@ export class AuthService {
 		const payload = {
 			email: user.email,
 			username: user.username,
+			_id: user._id
 		};
-		const accessToken = this.jwtService.sign(payload);
+		const accessToken = this.jwtService.sign(payload, {
+			expiresIn: '7d',
+		});
 		const decodedToken = this.jwtService.decode(accessToken) as { exp: number };
 
 		return {
