@@ -17,8 +17,8 @@ function IconButton({
 			className={clsx(
 				`inline-flex flex-shrink-0 items-center justify-center p-1 rounded-md transition-all`,
 				{
-					"hover:bg-gray-200 hover:bg-opacity-55 animation-on-hover": !disabled,
-					"cursor-not-allowed text-gray-200 ": disabled
+					"hover:bg-gray-300 hover:bg-opacity-55 animation-on-hover": !disabled,
+					"cursor-not-allowed text-gray-300 ": disabled
 				},
 				className
 			)}

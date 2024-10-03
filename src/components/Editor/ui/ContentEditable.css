@@ -14,22 +14,13 @@
 /*        opacity: 1;*/
 /*    }*/
 /*}*/
-.ContentEditable__root p{
-    @apply relative
-}
+/*.ContentEditable__root p{*/
+/*    @apply relative*/
+/*}*/
 
 .ContentEditable__root p:last-child::after {
-    content: '↑ - Enter "↓" or Click here to create a new paragraph';
+    content: '↑';
     /*animation: blink 5s ease-in-out;*/
-    @apply absolute top-0 left-1 text-gray-400
-}
-.ContentEditable__root p:last-child:hover {
-    @apply bg-blue-200 bg-opacity-50 rounded-sm cursor-pointer transition-all animation-on-hover
-}
-
-.ContentEditable__placeholder {
-    @apply text-gray-500 overflow-hidden absolute top-[8px] left-0.5 select-none
-    inline-block pointer-events-none whitespace-nowrap
-
+    @apply absolute -bottom-3 font-bold text-gray-400
 }
 

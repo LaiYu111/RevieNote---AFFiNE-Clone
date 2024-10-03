@@ -3,47 +3,47 @@
 @tailwind utilities;
 
 html {
-    font-size: 16px; /* 字体大小基准 */
+  font-size: 16px; /* 字体大小基准 */
 }
 
 body {
-    @apply font-sans;
-    -webkit-font-smoothing: antialiased; /* 优化 WebKit 浏览器的字体平滑 */
-    -moz-osx-font-smoothing: grayscale;  /* 优化 Firefox 的字体平滑 */
-    text-rendering: optimizeLegibility;  /* 提升字体可读性 */
+  @apply font-sans;
+  -webkit-font-smoothing: antialiased; /* 优化 WebKit 浏览器的字体平滑 */
+  -moz-osx-font-smoothing: grayscale;  /* 优化 Firefox 的字体平滑 */
+  text-rendering: optimizeLegibility;  /* 提升字体可读性 */
 }
 
 .icon {
-    @apply text-gray-400 size-5
+  @apply text-gray-400 size-5
 }
 
 .dropdown-icon {
-    @apply text-gray-400 size-4
+  @apply text-gray-400 size-4
 }
 
 .caption {
-    @apply text-gray-500 text-sm
+  @apply text-gray-500 text-sm
 }
 
 @keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* animations */
 @layer utilities {
-    .animation-on-hover {
-        @apply transition-all duration-300 ease-in-out
-    }
+  .animation-on-hover {
+    @apply transition-all duration-300 ease-in-out
+  }
 
-    .animation-fade-in {
-        @apply transition-all duration-300 ease-in-out
-    }
-    .animation-fade-in:hover{
-        animation: fade-in 0.3s forwards;
-    }
+  .animation-fade-in {
+    @apply transition-all duration-300 ease-in-out
+  }
+  .animation-fade-in:hover{
+    animation: fade-in 0.3s forwards;
+  }
 }
